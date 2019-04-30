@@ -1,7 +1,7 @@
 
-//==================//
-// NEURONS or NODES //
-//==================//
+//================//
+// NEURON or NODE //
+//================//
 
 {
 
@@ -142,6 +142,15 @@ Network.prototype.getOutput = function() {
 	return this.outputLayer.get();
 };
 Network.prototype.update = function(){
+	for(var i = 0; i < this.hiddenLayers.length; i ++){
+		this.hiddenLayers[i].update();
+	}
+	this.outputLayer.update();
+};
+Netowrk.prototype.evolve = function(learn){
+	
+};
+Network.prototype.copy = function(){
 
 };
 
