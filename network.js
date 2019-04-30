@@ -1,6 +1,18 @@
 
 //================//
-// NEURON or NODE //
+//SIGMOID FUNCTION//
+//================//
+
+{
+
+function sigmoid(t) {
+	return 1/(1+Math.pow(Math.E, -t));
+};
+
+}
+
+//================//
+//NEURONS or NODES//
 //================//
 
 {
@@ -9,9 +21,9 @@ function Node(bias, index, outOf){
 	this.bias = bias;
 	this.index = index;
 	this.outOf = outOf;
+	this.val = 0;
 	this.inputs = [];
 	this.weights = [];
-	this.val = 0;
 };
 Node.prototype.set = function(val){
 	this.val = val;
@@ -31,6 +43,28 @@ Node.prototype.update = function(){
 Node.prototype.display = function(x,y,d){
 	fill(this.val*255);
 	ellipse(x,y,d,d);
+};
+Node.prototype.randomize = function(a){
+	function v(){
+		return Math.random() * a - a/2;
+	}
+	this.bias += v();
+	for(var i = 0; i < this.weights; i ++){
+		this.weights[i] += v();
+	}
+
+};
+Node.prototype.copy = function(){
+	var newNode = {};
+	newNode.bias = this.bias;
+	newNode.index = this.index;
+	newNode.outOf = this.outOf;
+	newNode.val = 0;
+	newNode.inputs = [];
+	newNode.weights = [];
+	for(var i = 0; i < this.weights.length; i ++){
+		newNode.weights[i] = this.weights[i];
+	}
 };
 
 }
@@ -103,8 +137,11 @@ Layer.prototype.get = function(){
 };
 Layer.prototype.evolve = function(learn){
 	for(var i = 0; i < this.nodes.length; i ++){
-
+		this.nodes[i].randomize(learn);
 	}
+};
+Layer.prototype.copy = function(){
+
 };
 
 }
@@ -148,10 +185,19 @@ Network.prototype.update = function(){
 	this.outputLayer.update();
 };
 Netowrk.prototype.evolve = function(learn){
-	
+	this.outputLayer.evolve(learn);
+	for(var i = 0; i < this.hiddenLayers.length; i ++){
+		this.hiddenLayers[i].evolve(learn);
+	}
 };
 Network.prototype.copy = function(){
-
+	var newNet = {};
+	newNet.inputLayer = this.inputLayer.copy();
+	newNet.outputLayer = this.outputLayer.copy();
+	newNet.hiddenLayers = [];
+	for(var i = 0; i < this.hiddenLayers.length; i ++){
+		newNet.hiddenLayers[i] = this.hiddenLayers[i];
+	}
 };
 
 }
