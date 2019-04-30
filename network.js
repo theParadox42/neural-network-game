@@ -103,7 +103,7 @@ Layer.prototype.get = function(){
 };
 Layer.prototype.evolve = function(learn){
 	for(var i = 0; i < this.nodes.length; i ++){
-		
+
 	}
 };
 
@@ -145,13 +145,4 @@ Network.prototype.update = function(){
 
 };
 
-//
-// var inputLayer = new Layer(2);
-// var hiddenLayer = new Layer(12);
-// var hiddenLayer2 = new Layer(12);
-// var outputLayer = new Layer(4);
-//
-// inputLayer.set([1,3]);
-// hiddenLayer.setInput(inputLayer);
-// hiddenLayer2.setInput(hiddenLayer);
-// outputLayer.setInput(hiddenLayer2);
+}
