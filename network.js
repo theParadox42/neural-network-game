@@ -49,8 +49,8 @@
 			return Math.random() * a - a/2;
 		}
 		this.bias += v()/10;
-		for(var i = 0; i < this.weights; i ++){
-			this.weights[i] += v();
+		for(var i = 0; i < this.weights.length; i ++){
+			this.weights[i] = constrain(this.weights[i]+v(),-10,10);
 		}
 
 	};
@@ -159,17 +159,18 @@
 			return alert("Not enough layers for a Network");
 		}
 		this.inputLayer = new Layer(layers[0]);
-		this.outputlayer = new Layer(layers[layers.length-1]);
+		this.outputLayer = new Layer(layers[layers.length-1]);
 		this.hiddenLayers = [];
 		if(layers.length > 2) {
-			for(var i = 1; i < layers.length-1; i ++){
-				this.hiddenLayers[i-1] = new Layer(layers[i]);
-				if(i == 1){
-					this.hiddenLayers[i-1].setInput(this.inputLayer)
+			for(var i = 0; i < layers.length-2; i ++){
+				this.hiddenLayers[i] = new Layer(layers[i+1]);
+				if(i == 0){
+					this.hiddenLayers[i].setInput(this.inputLayer)
 				} else {
-					this.hiddenLayers[i-1].setInput(this.hiddenLayers[i-2]);
+					this.hiddenLayers[i].setInput(this.hiddenLayers[i-1]);
 				}
 			}
+			this.outputLayer.setInput(this.hiddenLayers[this.hiddenLayers.length-1]);
 		} else {
 			this.outputLayer.setInput(this.inputLayer);
 		}
@@ -188,27 +189,29 @@
 	};
 	Network.prototype.display = function(x,my,w,nh) {
 		var layers = 2 + this.hiddenLayers.length;
-		var sw = w/(layers)
+		var sw = w/(layers-1);
 		this.outputLayer.display(x+w,my,x+w-sw,nh);
 		for(var i = this.hiddenLayers.length-1; i > -1; i --){
-			this.hiddenLayers[i].display(x+i*sw,my,x+(i-1)*sw,nh);
+			this.hiddenLayers[i].display(x+i*sw+sw, my, x+i*sw, nh);
 		}
-		this.inputLayer.display(x,my,x,nh);
+		this.inputLayer.display(x,my,x-sw,nh);
 	};
-	Network.prototype.evolve = function(learn){
-		this.outputLayer.evolve(learn);
+	Network.prototype.learn = function(learn){
 		for(var i = 0; i < this.hiddenLayers.length; i ++){
 			this.hiddenLayers[i].evolve(learn);
 		}
+		this.outputLayer.evolve(learn);
+		this.update();
 	};
+
 	Network.prototype.copy = function(){
-		var newNet = {};
+		var newNet = new Network([0,0]);
 		newNet.inputLayer = this.inputLayer.copy();
 		newNet.outputLayer = this.outputLayer.copy();
 		if(this.hiddenLayers.length>0){
 			for(var i = 0; i < this.hiddenLayers.length; i ++){
 				newNet.hiddenLayers[i] = this.hiddenLayers[i].copy();
-				if(i == 0) {
+				if(i == 0){
 					newNet.hiddenLayers[i].setInput(newNet.inputLayer);
 				} else {
 					newNet.hiddenLayers[i].setInput(newNet.hiddenLayers[i-1]);
