@@ -153,7 +153,9 @@
 {
 
 	function Network(layers) {
-		if(layers.length < 2) {
+		if(!(layers instanceof Array)){
+			return alert("Not a valid array!");
+		} else if(layers.length < 2) {
 			return alert("Not enough layers for a Network");
 		}
 		this.inputLayer = new Layer(layers[0]);
@@ -185,8 +187,13 @@
 		this.outputLayer.update();
 	};
 	Network.prototype.display = function(x,my,w,nh) {
-		var layers = 2 + this.hiddenLayers.length
-		this.outputLayer.display()
+		var layers = 2 + this.hiddenLayers.length;
+		var sw = w/(layers)
+		this.outputLayer.display(x+w,my,x+w-sw,nh);
+		for(var i = this.hiddenLayers.length-1; i > -1; i --){
+			this.hiddenLayers[i].display(x+i*sw,my,x+(i-1)*sw,nh);
+		}
+		this.inputLayer.display(x,my,x,nh);
 	};
 	Network.prototype.evolve = function(learn){
 		this.outputLayer.evolve(learn);
