@@ -21,6 +21,10 @@ function draw(){
     AI.run();
     Obstacle.run([player].concat(AI.ais))
 
+    if(player.dead&&AI.dead()){
+        reset();
+    }
+
     pop();
 
     fill(100,60,0);
@@ -34,6 +38,7 @@ function draw(){
 
 function reset(){
     player = new Player();
+    AI.reset();
 };
 
 function updateCanvas(){

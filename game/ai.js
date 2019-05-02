@@ -46,6 +46,12 @@ AI.run = function(){
         ai.run(nearest);
     }
 }
+AI.dead = function(){
+    var dead = true;
+    for(var i = 0; i < this.ais.length; i ++){
+        if(this.ais[i])
+    }
+}
 AI.reset = function(){
     this.ais.sort(function(ai1, ai2){
         return ai1.points-ai2.points;
