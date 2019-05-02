@@ -31,6 +31,7 @@ AI.prototype.reset = function(x, l){
     this.vy = 0;
     this.y = -this.h;
     this.net.learn(l||0);
+    this.dead = false;
 };
 
 
@@ -72,12 +73,12 @@ AI.reset = function(){
         return ai2.points-ai1.points;
     })
     for(var i = 0; i < this.ais.length/2; i ++){
-       // this.ais.pop();
+       this.ais.pop();
     }
     var l = this.ais.length;
     for(var i = 0; i < l; i ++){
         var r = 2;
         this.ais[i].reset(this.getX(i), r);
-        //this.ais.push(new this(this.getX(i*2), r, this.ais[i].net));
+        this.ais.push(new this(this.getX(i*2), r, this.ais[i].net));
     }
 }
