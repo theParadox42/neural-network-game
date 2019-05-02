@@ -37,6 +37,6 @@ Obstacle.run = function(players){
     if(this.count<=0){
         this.add();
         this.count = Math.random()*20+this.reload;
-        this.reload--;
+        this.reload-=5;
     }
 };
