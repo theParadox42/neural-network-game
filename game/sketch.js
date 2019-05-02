@@ -1,5 +1,5 @@
 
-
+var transX = 0;
 var canvas;
 
 function setup(){
@@ -13,15 +13,17 @@ function draw(){
 
     translate(width/2, height/2);
 
+    transX -= player.vx;
     push();
-    translate(-player.x, 0);
+    translate(transX, 0);
 
     player.run();
     AI.run();
+    Obstacle.run([player].concat(AI.ais))
 
     pop();
 
-    fill(200,160,0);
+    fill(100,60,0);
     noStroke();
     rect(-width/2,0,width,height/2+20);
 
@@ -30,11 +32,15 @@ function draw(){
     updateCanvas();
 };
 
+function reset(){
+    player = new Player();
+};
+
 function updateCanvas(){
     if(canvas.height != windowHeight || canvas.width != windowWidth){
         resizeCanvas(windowWidth, windowHeight)
     }
-}
+};
 
 function mouseReleased(){
     if(!fullscreen()){
