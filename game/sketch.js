@@ -8,8 +8,7 @@ function setup(){
 };
 
 function draw(){
-    fill(255,255,255);
-    rect(0,0,width,height);
+    background(200,225,255);
 
     translate(width/2, height/2);
 
