@@ -32,6 +32,7 @@ AI.prototype.reset = function(x, l){
     this.y = -this.h;
     this.net.learn(l||0);
     this.dead = false;
+    this.points = 0;
 };
 
 
