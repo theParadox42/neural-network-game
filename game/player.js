@@ -39,7 +39,7 @@ Player.prototype.update = function(){
         this.y = -this.h;
         this.vy = min(this.vy,0);
     }
-    if(frameCount%20==0){
+    if(frameCount%20==0&&this.x>0){
         this.points ++;
     }
 };
