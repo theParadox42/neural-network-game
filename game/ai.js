@@ -69,7 +69,7 @@ AI.dead = function(){
 }
 AI.reset = function(){
     this.ais.sort(function(ai1, ai2){
-        return ai1.points-ai2.points;
+        return ai2.points-ai1.points;
     })
     for(var i = 0; i < this.ais.length/2; i ++){
         this.ais.pop();
