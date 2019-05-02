@@ -25,10 +25,22 @@ AI.prototype.run = function(ob){
         this.net.display(this.x, this.y-this.h/2, this.w, this.h/5);
     }
 };
+AI.prototype.reset = function(x, l){
+    this.x = x;
+    this.vx = this.ovx || this.vx;
+    this.vy = 0;
+    this.y = -this.h;
+    this.net.learn(l);
+};
+
+
 AI.ais = [];
+AI.getX = function(i){
+    return -40*i-50;
+};
 AI.init = function(ais){
-    for(var i = 0; i < ais; i ++){
-        this.ais.push(new this(-40*i-50, 0.2));
+    for(var i = 0; i < round(ais/2)*2; i ++){
+        this.ais.push(new this(this.getX(i), 0));
     }
 }
 AI.run = function(){
@@ -49,12 +61,23 @@ AI.run = function(){
 AI.dead = function(){
     var dead = true;
     for(var i = 0; i < this.ais.length; i ++){
-        if(this.ais[i])
+        if(!this.ais[i].dead){
+            dead = false;
+        }
     }
+    return dead;
 }
 AI.reset = function(){
     this.ais.sort(function(ai1, ai2){
         return ai1.points-ai2.points;
     })
-    console.log(this.ais);
+    for(var i = 0; i < this.ais.length/2; i ++){
+        this.ais.pop();
+    }
+    var l = this.ais.length;
+    for(var i = 0; i < l; i ++){
+        var r = 2;
+        this.ais[i].reset(this.getX(i), r);
+        this.ais.push(new this(this.getX(i*2), r, this.ais[i].net));
+    }
 }
