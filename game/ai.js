@@ -47,7 +47,7 @@ AI.init = function(ais){
 AI.run = function(){
     for(var i = this.ais.length-1; i > -1; i --){
         var ai = this.ais[i];
-        var nearest;
+        var nearest = false;
         var nearestDistance = width*width;
         for(var j = 0; j < Obstacle.obstacles.length; j ++){
             var o = Obstacle.obstacles[j];
@@ -80,6 +80,6 @@ AI.reset = function(){
     for(var i = 0; i < l; i ++){
         var r = 2;
         this.ais[i].reset(this.getX(i), r);
-        this.ais.push(new this(this.getX(i*2), r, this.ais[i].net));
+        this.ais.push(new this(this.getX((i+1)*2), r, this.ais[i].net));
     }
 }
