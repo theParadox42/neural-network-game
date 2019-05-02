@@ -1,23 +1,40 @@
 
 
-var testNet;
-
 var canvas;
 
 function setup(){
-    testNet = new Network([1,3,2]);
     canvas = createCanvas(windowWidth,windowHeight)
+    AI.init(5);
 };
 
 function draw(){
-    background(240);
+    fill(255,255,255);
+    rect(0,0,width,height);
 
-    testNet.display();
+    translate(width/2, height/2);
 
-    if(canvas.height != windowHeight || canvas.width != windowWidth){
-        canvas = resizeCanvas(windowWidth, windowHeight)
-    }
+    push();
+    translate(-player.x, 0);
+
+    player.run();
+    AI.run();
+
+    pop();
+
+    fill(200,160,0);
+    noStroke();
+    rect(-width/2,0,width,height/2+20);
+
+    resetMatrix();
+
+    updateCanvas();
 };
+
+function updateCanvas(){
+    if(canvas.height != windowHeight || canvas.width != windowWidth){
+        resizeCanvas(windowWidth, windowHeight)
+    }
+}
 
 function mouseReleased(){
     if(!fullscreen()){

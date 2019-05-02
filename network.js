@@ -203,7 +203,6 @@
 		this.outputLayer.evolve(learn);
 		this.update();
 	};
-
 	Network.prototype.copy = function(){
 		var newNet = new Network([0,0]);
 		newNet.inputLayer = this.inputLayer.copy();
