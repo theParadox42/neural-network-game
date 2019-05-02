@@ -36,7 +36,7 @@ function draw(){
 };
 
 function reset(){
-    player = new Player();
+    player = new Player(0);
     AI.reset();
     transX = 0;
 };
