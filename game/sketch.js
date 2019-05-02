@@ -39,6 +39,7 @@ function reset(){
     player = new Player(0);
     AI.reset();
     transX = 0;
+    Obstacle.reload = 150;
 };
 
 function updateCanvas(){
