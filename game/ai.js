@@ -72,10 +72,11 @@ AI.reset = function(){
     this.ais.sort(function(ai1, ai2){
         return ai2.points-ai1.points;
     })
-    for(var i = 0; i < this.ais.length/2; i ++){
+    var l = this.ais.length/2;
+    for(var i = 0; i < l; i ++){
        this.ais.pop();
     }
-    var l = this.ais.length;
+    l = this.ais.length;
     for(var i = 0; i < l; i ++){
         var r = 2;
         this.ais[i].reset(this.getX(i), r);
