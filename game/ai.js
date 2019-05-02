@@ -72,7 +72,7 @@ AI.reset = function(){
         return ai2.points-ai1.points;
     })
     for(var i = 0; i < this.ais.length/2; i ++){
-        this.ais.pop();
+       // this.ais.pop();
     }
     var l = this.ais.length;
     for(var i = 0; i < l; i ++){
