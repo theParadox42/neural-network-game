@@ -4,6 +4,7 @@ function Player(x){
     this.h = this.w;
     this.y = -this.h;
     this.vx = 5;
+    this.ovx = this.vx;//original vx
     this.vy = 0;
     this.px = this.x - this.vx;
     this.py = this.y - this.vy;
