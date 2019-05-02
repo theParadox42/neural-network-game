@@ -40,6 +40,7 @@ function reset(){
     AI.reset();
     transX = 0;
     Obstacle.reload = 150;
+    Obstacle.obstacles = [];
 };
 
 function updateCanvas(){
