@@ -38,6 +38,7 @@ function draw(){
 function reset(){
     player = new Player();
     AI.reset();
+    transX = 0;
 };
 
 function updateCanvas(){
