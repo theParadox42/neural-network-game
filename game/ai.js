@@ -6,7 +6,7 @@ function AI(x, learn, net){
     } else {
         this.net = new Network([1, 1]);
     }
-    this.net.learn(learn||1);
+    this.net.learn(learn||0);
     this.net.update();
 };
 AI.prototype = Object.create(Player.prototype);
@@ -30,7 +30,7 @@ AI.prototype.reset = function(x, l){
     this.vx = this.ovx || this.vx;
     this.vy = 0;
     this.y = -this.h;
-    this.net.learn(l);
+    this.net.learn(l||0);
 };
 
 
@@ -78,6 +78,6 @@ AI.reset = function(){
     for(var i = 0; i < l; i ++){
         var r = 2;
         this.ais[i].reset(this.getX(i), r);
-        this.ais.push(new this(this.getX(i*2), r, this.ais[i].net));
+        //this.ais.push(new this(this.getX(i*2), r, this.ais[i].net));
     }
 }
